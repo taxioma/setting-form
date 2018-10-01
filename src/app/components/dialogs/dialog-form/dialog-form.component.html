@@ -1,0 +1,71 @@
+<!--
+<div *ngIf="data.flag == true; then addForm else editForm">
+  <ng-template #addForm>
+    <p>Add</p>
+  </ng-template>
+  <ng-template #editForm>
+    <p>Edit</p>
+  </ng-template>
+  </div>
+  -->
+<div *ngIf="data.flag == false">
+</div>
+  <h2>Edit a setting {{data.element.fieldName}}</h2>
+
+  <form [formGroup]="settingForm" #formDir="ngForm">
+    <div class="form-group">
+      <label for="name">Name *</label>
+      <mat-form-field>
+        <textarea matInput id="name" class="form-control"
+                  formControlName="name" placeholder="Enter new name of setting"
+                  value="{{data.element.fieldName}}"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <label for="type">Type *</label>
+      <mat-form-field>
+        <mat-select id="type" class="form-control"
+                    formControlName="type" placeholder="Enter new type of setting">
+          <mat-option *ngFor="let t of settingsTypes" [value]="t">{{t}}</mat-option>
+        </mat-select>
+
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <div [ngSwitch]="type.value">
+        <label for="value">Value *</label>
+
+          <mat-form-field *ngSwitchCase="'Date'">
+            <input matInput [matDatepicker]="dp" placeholder="Verbose datepicker" [formControl]="value">
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp></mat-datepicker>
+          </mat-form-field>
+
+
+          <mat-form-field *ngSwitchCase="'number'">
+        <input matInput id="value" class="form-control" type="number"
+                  formControlName="value" placeholder="Enter only number type"
+                  value="{{data.element.fieldValue}}"/>
+          </mat-form-field>
+
+        <ng-template ngSwitchDefault>
+          <mat-form-field>
+        <textarea matInput id="value" class="form-control"
+                  formControlName="value" placeholder="Enter new value of setting"
+                  value="{{data.element.fieldValue}}"></textarea>
+          </mat-form-field>
+        </ng-template>
+      </div>
+    </div>
+    <mat-dialog-actions>
+
+      <button mat-button (click)="dialogRef.close()">Close</button>
+      <button mat-button (click)="edit(name.value, value.value, type.value, data.element.id)">Of course!</button>
+    </mat-dialog-actions>
+  </form>
+
+<!--
+<div class="container">
+  <button mat-button (click)="onNoClick()">Close</button>
+</div>
+-->

@@ -1,0 +1,18 @@
+  <div class="form-group block">
+    <p style="color: red;" [hidden]="isSuccess">Can't sign in!</p>
+    <label for="loginField">Login</label>
+    <mat-form-field>
+     <input type="text" matInput id="loginField" class="form-control" placeholder="Enter your login"  [(ngModel)]="tmpLogin.login"/>
+    </mat-form-field>
+  </div>
+
+  <div class="form-group block">
+    <label for="passField">Password</label>
+    <mat-form-field>
+     <input type="password" matInput id="passField" class="form-control"
+               placeholder="Enter your password" [(ngModel)]="tmpLogin.pass"/>
+    </mat-form-field>
+    <button (click)="login()" class="enter">Sign in</button>
+  </div>
+
+

@@ -1,0 +1,21 @@
+.block {
+  background-color: cornflowerblue;
+  display: block;
+  width: 400px;
+
+  margin: 0 auto;
+  margin-top: 5px;
+  padding: 5px;
+}
+.enter {
+  background-color: black;
+  color: cornflowerblue;
+  display: block;
+  text-align: center;
+  margin-top: 5px;
+  padding: 5px;
+  width: 150px;
+  height: 30px;
+  margin: 0 auto;
+
+}

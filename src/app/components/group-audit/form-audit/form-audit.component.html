@@ -1,0 +1,80 @@
+<h2>
+  Аудит
+</h2>
+<mat-form-field>
+  <input matInput (keyup)="filterString('fieldDate', $event.target.value)" placeholder="Enter Date">
+</mat-form-field>
+<mat-form-field>
+  <input matInput (keyup)="filterString('fieldHost', $event.target.value)" placeholder="Enter Host">
+</mat-form-field>
+<mat-table #table [dataSource]="dataSource" matSort>
+
+  <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>
+      <span [ngSwitch]="column">
+        <ng-template ngSwitchCase="fieldDate">Дата</ng-template>
+        <ng-template ngSwitchCase="fieldHost">Хост</ng-template>
+        <ng-template ngSwitchCase="fieldEvent">Событие</ng-template>
+        <ng-template ngSwitchCase="fieldComent">Комментарий</ng-template>
+        <ng-template ngSwitchCase="fieldResult">Результат</ng-template>
+        <ng-template ngSwitchDefault>{{column}}</ng-template>
+        </span>
+
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <span *ngIf="'fieldDate'; else unset">
+        <span [ngSwitch]="[column]">
+          <ng-template ngSwitchCase="fieldDate">{{element[column]| date:'short'}}</ng-template>
+          <ng-template ngSwitchDefault>
+            <span *ngIf="'fieldResult'; else unset">
+              <span [ngSwitch]="element[column]">
+                <ng-template ngSwitchCase="true">+</ng-template>
+                <ng-template ngSwitchCase="false">-</ng-template>
+                <ng-template ngSwitchDefault>{{element[column]}}</ng-template>
+              </span>
+            </span>
+          </ng-template>
+        </span>
+      </span>
+
+      <ng-template #unset>
+        {{element[column]}}
+      </ng-template>
+
+    </mat-cell>
+  </ng-container>
+
+  <!-- Name Column
+  <ng-container matColumnDef="fieldDate">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Дата</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.fieldDate}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="fieldHost">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Хост</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.fieldHost}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="fieldEvent">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Событие</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.fieldEvent}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="fieldComent">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Комментарий</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.fieldComent}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="fieldResult">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Результат</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.fieldResult}}</mat-cell>
+  </ng-container>
+  -->
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
+
+<mat-paginator #paginator
+               [pageSize]="4"
+               [pageSizeOptions]="[5, 7, 10]"></mat-paginator>
